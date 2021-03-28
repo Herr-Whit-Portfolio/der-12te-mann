@@ -1,0 +1,51 @@
+version: "2.0"
+
+stories:
+
+- story: greet
+  steps:
+  - intent: greet
+  - action: utter_name
+
+- story: goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: thanks
+  steps:
+  - intent: thanks
+  - action: utter_thanks
+
+- story: name
+  steps:
+    - intent: name
+      entities:
+        - name: "Sam"
+    - action: utter_greet
+
+- story: are_you_bot
+  steps:
+    - intent: greet
+    - action: utter_name
+    - intent: name
+      entities:
+        - name: "Sam"
+    - action: utter_greet
+    - intent: bot_challenge
+    - action: utter_iamabot
+    - intent: goodbye
+    - action: utter_goodbye
+
+- story: tell_me_joke
+  steps:
+    - intent: greet
+    - action: utter_name
+    - intent: name
+      entities:
+      - name: "Sam"
+    - action: utter_greet
+    - intent: joke
+    - action: utter_joke
+    - intent: goodbye
+    - action: utter_goodbye
