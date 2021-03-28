@@ -1,5 +1,4 @@
 version: "2.0"
-
 nlu:
 - intent: greet
   examples: |
@@ -37,13 +36,12 @@ nlu:
     - Servus
     - Servus bot
     - hi bot
-    - hi bot
     - huhu bot
     - huhu du da
     - huhu hallo
     - huhu
     - huhu sag mal hallo
-
+    - Hallo chatbot, wie gehts?
 - intent: goodbye
   examples: |
     - Schönen Abend noch
@@ -72,7 +70,6 @@ nlu:
     - bis zum nächsten Mal bot
     - Bis zum nächsten Mal. Tschau.
     - bye
-    - bot
     - Ciao.
     - Ich gehe jetzt
     - Ich verabschiede mich jetzt
@@ -91,7 +88,7 @@ nlu:
     - Tschüss chat bot.
     - Wir sehen uns!
     - Wir sehen uns das nächste mal
-
+    - tschau, ich muss los
 - intent: thanks
   examples: |
     - Danke
@@ -108,7 +105,6 @@ nlu:
     - ja danke
     - ok vielen dank
     - großartig vielen dank
-
 - intent: affirm
   examples: |
     - Alles klar.
@@ -156,7 +152,6 @@ nlu:
     - nu klar bot
     - ok bot
     - okay bot
-
 - intent: name
   examples: |
     - Mein name ist [Juste](name)  <!--- Square brackets contain the value of entity while the text in parentheses is a a label of the entity -->
@@ -193,45 +188,31 @@ nlu:
     - [Lina](name)
     - [Jenny](name)
     - name is [Andrew](name)
-    - I [Lora](name)
-    - [Stan](name) is my name
-    - [Susan](name) is the name
-    - [Ross](name) is my first name
-    - [Bing](name) is my last name
-    - Few call me as [Angelina](name)
-    - Some call me [Julia](name)
-    - Everyone calls me [Laura](name)
-    - I am [Ganesh](name)
-    - My name is [Mike](name)
-    - just call me [Monika](name)
-    - Few call [Dan](name)
-    - You can always call me [Suraj](name)
-    - Some will call me [Andrew](name)
-    - My name is [Ajay](name)
-    - I call [Ding](name)
-    - I'm [Partia](name)
-    - Please call me [Leo](name)
     - name is [Pari](name)
     - name [Sanjay](name)
-
-
-- intent: joke
+    - Hi, ich heisse [Deb](name)
+- intent: dumb_quote
   examples: |
-    - erzähle einen witz
-    - erzähle einen witz chat bot
-    - erzähle einen witz bot
-    - erzähle mir bitte einen witz
-    - erzähle mir bitte einen witz chat bot
-    - erzähle mir bitte einen witz bot
-    - kannst du mir einen witz erzählen bot
-    - kannst du mir einen witz erzählen
-    - kannst du witze erzählen
-    - bot kannst du witze erzählen
-    - kannst du bitte einen witz erzählen
-    - bist du gut im witze erzählen
-    - kennst du witze
-    - kennst du viele witze
-    - Kanst du scherze machen
+    - erzähle ein Zitat
+    - erzähle einen Witz
+    - erzähle ein Zitat chat bot
+    - erzähle ein Zitat bot
+    - erzähle mir bitte ein Zitat
+    - erzähle mir bitte ein Zitat chat bot
+    - erzähle mir bitte ein Zitat bot
+    - erzähle ein Fußballzitat bot
+    - erzähle mir bitte ein Fußballzitat
+    - erzähle mir bitte ein Fußballzitat chat bot
+    - erzähle mir bitte ein Fußballzitat bot
+    - kannst du mir ein Fußballzitat erzählen bot
+    - kannst du mir einen Fußballzitat erzählen
+    - kannst du Fußballzitate erzählen
+    - bot kannst du Fußballzitate erzählen
+    - kannst du bitte einen Fußballzitat erzählen
+    - hast du fußballzitate auf lager?
+    - kennst du fußballzitate
+    - kennst du viele fußballzitate
+    - Kanst du fußballzitate erzählen
     - scherzt du manchmal
     - erzähle mir etwas lustiges
     - erzähle mir bitte etwas lustiges
@@ -259,11 +240,22 @@ nlu:
     - sag doch mal was lustiges
     - Witz
     - Kannst du witze erzählen bot
-
-
+    - sag mir doch dein lieblings-zitat
+    - Hast du noch ein Zitat fuer mich
+    - Kennst du ein Zitat von POdolski
+    - das kenn ich schon, gib mir ein neues Zitat
 - intent: bot_challenge
   examples: |
     - Bist du ein Bot?
     - Bist du ein Mensch?
     - Spreche ich mit einem Chatbot?
     - Spreche ich mit einem Menschen?
+- intent: get_table_leader
+  examples: |
+    - Wer führt die Tabelle an?
+    - Wer ist Tabellen-Erster?
+    - Zeig mir die Tabelle!
+    - Wer führt gerade?
+    - Wie sieht die Tabelle aus?
+    - Welche ist die beste Mannschaft?
+    - Wer isr gerade Spitzenreiter

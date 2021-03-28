@@ -1,47 +1,45 @@
-version: "2.0"
-
-intents:
-- greet
-- goodbye
-- thanks
-- deny
-- joke
-- name
-
-entities:
-- name
-
-slots:
-  name:
-    type: text
-
-
-actions:
-- utter_name
-- utter_thanks
-- utter_greet
-- utter_goodbye
-- utter_joke
-- utter_iamabot
-
-
-responses:
-  utter_name:
-  - text: "Hallo, verrätst du mir deinen Namen?"
-  utter_greet:
-  - text: "Hallo {name}, schön dich kennenzulernen. Wie kann ich dir helfen?"
-  utter_goodbye:
-  - text: "Machs gut!"
-  utter_thanks:
-  - text: "Gerne doch"
-  utter_joke:
-  - text: "Rollt ein Fussball um die Ecke und fällt um."
-  utter_iamabot:
-  - text: "Ich gebs ja zu... Ich bin ein Bot!"
-
-
-
-
+version: '2.0'
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+intents:
+- goodbye
+- name
+- greet
+- dumb_quote
+- get_table_leader
+- thanks
+- deny
+- bot_challenge
+entities:
+- name
+slots:
+  name:
+    type: text
+    influence_conversation: true
+responses:
+  utter_name:
+  - text: Hallo, verrätst du mir deinen Namen?
+  utter_greet:
+  - text: Hallo {name}, schön dich kennenzulernen. Zurzeit kann ich dir sagen, wer die Tabelle anführt und ein paar Zitate nennen. Wie kann ich dir helfen?
+  utter_goodbye:
+  - text: Machs gut!
+  utter_thanks:
+  - text: Gerne doch
+  utter_dumb_quote:
+  - text: „Der Grund war nicht die Ursache, sondern der Auslöser.“ - Franz Beckenbauer
+  - text: „Der Oberarm gehört zur Hand.“ - Beni Turnher
+  - text: „Die Schweden sind keine Holländer – das hat man ganz genau gesehen.“ - Franz Beckenbauer
+  - text: „Eier, wir brauchen Eier“ - Oliver Kahn
+  - text: „Wenn man keine Tore macht, ist es ganz schwer, ein Spiel zu gewinnen.“ - Reinhold Fanz
+  - text: Rollt ein Fussball um die Ecke und fällt um.
+  utter_iamabot:
+  - text: Ich gebs ja zu... Ich bin ein Bot!
+actions:
+- action_get_team_ranking
+- utter_dumb_quote
+- utter_goodbye
+- utter_greet
+- utter_iamabot
+- utter_name
+- utter_thanks

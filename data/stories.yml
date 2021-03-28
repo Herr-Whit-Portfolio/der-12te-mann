@@ -37,7 +37,7 @@ stories:
     - intent: goodbye
     - action: utter_goodbye
 
-- story: tell_me_joke
+- story: tell_me_quote
   steps:
     - intent: greet
     - action: utter_name
@@ -45,7 +45,44 @@ stories:
       entities:
       - name: "Sam"
     - action: utter_greet
-    - intent: joke
-    - action: utter_joke
+    - intent: dumb_quote
+    - action: utter_dumb_quote
     - intent: goodbye
     - action: utter_goodbye
+
+- story: tell_me_quote
+  steps:
+    - intent: greet
+    - action: utter_name
+    - intent: name
+      entities:
+      - name: "Sam"
+    - action: utter_greet
+    - intent: get_table_leader
+    - action: action_get_team_ranking
+    - intent: goodbye
+    - action: utter_goodbye
+
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_name
+  - intent: name
+    entities:
+    - name: Deb
+  - slot_was_set:
+    - name: Deb
+  - action: utter_greet
+  - intent: dumb_quote
+  - action: utter_dumb_quote
+  - intent: dumb_quote
+  - action: utter_dumb_quote
+  - intent: get_table_leader
+  - action: action_get_team_ranking
+  - intent: dumb_quote
+  - action: utter_dumb_quote
+  - intent: dumb_quote
+  - action: utter_dumb_quote
+  - intent: goodbye
+  - action: utter_goodbye
