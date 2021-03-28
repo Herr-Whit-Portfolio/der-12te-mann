@@ -1,33 +1,46 @@
 version: "2.0"
 
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+- greet
+- goodbye
+- thanks
+- deny
+- joke
+- name
+
+entities:
+- name
+
+slots:
+  name:
+    type: text
+
+
+actions:
+- utter_name
+- utter_thanks
+- utter_greet
+- utter_goodbye
+- utter_joke
+- utter_iamabot
+
 
 responses:
+  utter_name:
+  - text: "Hallo, verrätst du mir deinen Namen?"
   utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
+  - text: "Hallo {name}, schön dich kennenzulernen. Wie kann ich dir helfen?"
   utter_goodbye:
-  - text: "Bye"
-
+  - text: "Machs gut!"
+  utter_thanks:
+  - text: "Gerne doch"
+  utter_joke:
+  - text: "Rollt ein Fussball um die Ecke und fällt um."
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  - text: "Ich gebs ja zu... Ich bin ein Bot!"
+
+
+
 
 session_config:
   session_expiration_time: 60
