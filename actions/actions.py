@@ -35,6 +35,9 @@ class FootballAction(Action):
         self.datetime_format = '%Y-%m-%dT%H:%M:%SZ'
         self.BASE_URL = 'http://www.openligadb.de/api'
 
+    def interact_with_api(self):
+        NotImplementedError('Please specify API interaction')
+
 
 class ActionGetTableLeader(FootballAction):
 
@@ -44,6 +47,10 @@ class ActionGetTableLeader(FootballAction):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text=self.interact_with_api())
+        return []
+
+    def interact_with_api(self):
         apology = "Es tut mir Leid, ich konnte die Tabelle nicht finden."
         request_url = self.BASE_URL + '/getbltable/bl1/' + self.YEAR
         response = get(request_url)
@@ -53,15 +60,14 @@ class ActionGetTableLeader(FootballAction):
 
             try:
                 utterance = f"""
-                                {table_leader["TeamName"]} führt die Tabelle mit {table_leader["Points"]} Punkten an und hat einen Vorsprung von
-                                {table_leader["Points"] - result[1]["Points"]} Punkten vor dem Tabellen-Zweiten {result[1]["TeamName"]}
-                            """
-                dispatcher.utter_message(text=tidy_string(utterance))
+                                        {table_leader["TeamName"]} führt die Tabelle mit {table_leader["Points"]} Punkten an und hat einen Vorsprung von
+                                        {table_leader["Points"] - result[1]["Points"]} Punkten vor dem Tabellen-Zweiten {result[1]["TeamName"]}
+                                    """
+                return tidy_string(utterance)
             except KeyError:
-                dispatcher.utter_message(text=apology)
+                return apology
         else:
-            dispatcher.utter_message(text=apology)
-        return []
+            return apology
 
 
 """
