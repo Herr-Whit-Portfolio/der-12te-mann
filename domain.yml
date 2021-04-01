@@ -3,9 +3,10 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
-- goodbye
 - name
 - greet
+- goodbye
+- get_next_game
 - dumb_quote
 - get_table_leader
 - thanks
@@ -36,7 +37,8 @@ responses:
   utter_iamabot:
   - text: Ich gebs ja zu... Ich bin ein Bot!
 actions:
-- action_get_team_ranking
+- action_get_next_game
+- action_get_table_leader
 - utter_dumb_quote
 - utter_goodbye
 - utter_greet

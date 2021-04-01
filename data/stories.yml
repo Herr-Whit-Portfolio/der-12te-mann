@@ -50,7 +50,7 @@ stories:
     - intent: goodbye
     - action: utter_goodbye
 
-- story: tell_me_quote
+- story: give_me_info_1
   steps:
     - intent: greet
     - action: utter_name
@@ -59,7 +59,9 @@ stories:
       - name: "Sam"
     - action: utter_greet
     - intent: get_table_leader
-    - action: action_get_team_ranking
+    - action: action_get_table_leader
+    - intent: get_next_game
+    - action: action_get_next_game
     - intent: goodbye
     - action: utter_goodbye
 
@@ -79,10 +81,37 @@ stories:
   - intent: dumb_quote
   - action: utter_dumb_quote
   - intent: get_table_leader
-  - action: action_get_team_ranking
+  - action: action_get_table_leader
   - intent: dumb_quote
   - action: utter_dumb_quote
   - intent: dumb_quote
   - action: utter_dumb_quote
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_name
+  - intent: name
+    entities:
+    - name: Anton
+  - slot_was_set:
+    - name: Anton
+  - action: utter_greet
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: get_next_game
+  - action: action_get_next_game
   - intent: goodbye
   - action: utter_goodbye

@@ -89,6 +89,7 @@ nlu:
     - Wir sehen uns!
     - Wir sehen uns das nächste mal
     - tschau, ich muss los
+    - Tschautschau!
 - intent: thanks
   examples: |
     - Danke
@@ -152,6 +153,7 @@ nlu:
     - nu klar bot
     - ok bot
     - okay bot
+    - genau!
 - intent: name
   examples: |
     - Mein name ist [Juste](name)  <!--- Square brackets contain the value of entity while the text in parentheses is a a label of the entity -->
@@ -191,6 +193,7 @@ nlu:
     - name is [Pari](name)
     - name [Sanjay](name)
     - Hi, ich heisse [Deb](name)
+    - Hi! Ich bin [Anton](name)
 - intent: dumb_quote
   examples: |
     - erzähle ein Zitat
@@ -259,3 +262,16 @@ nlu:
     - Wie sieht die Tabelle aus?
     - Welche ist die beste Mannschaft?
     - Wer isr gerade Spitzenreiter
+- intent: get_next_game
+  examples: |
+    - Wer spielt am nächsten Spieltag?
+    - Was ist das nächste Bundesliga-Spiel?
+    - Zeig mir, wer als nächstes spielt.
+    - Zeig mir das nächste match.
+    - Wer spielt demnächst?
+    - Zeig mir den Spielplan.
+    - Was steht nächsten Spieltag an?
+    - Erzähl mir, was nächsten Spieltag ansteht.
+    - Was läuft nächsten Spieltag
+    - Wer spielt als nächstes?
+    - Welches ist das nächste spiel?
