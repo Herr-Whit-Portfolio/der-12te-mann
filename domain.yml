@@ -3,26 +3,24 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
-- name
-- greet
+- get_team_stats
 - goodbye
-- get_next_game
 - dumb_quote
+- greet
 - get_table_leader
+- get_next_game
 - thanks
 - deny
 - bot_challenge
 entities:
-- name
+- team_name
 slots:
-  name:
+  team_name:
     type: text
     influence_conversation: true
 responses:
-  utter_name:
-  - text: Hallo, verrätst du mir deinen Namen?
   utter_greet:
-  - text: Hallo {name}, schön dich kennenzulernen. Zurzeit kann ich dir sagen, wer die Tabelle anführt und ein paar Zitate nennen. Wie kann ich dir helfen?
+  - text: Hallo, schön dich kennenzulernen. Zurzeit kann ich dir sagen, wer die Tabelle anführt und ein paar Zitate nennen. Wie kann ich dir helfen?
   utter_goodbye:
   - text: Machs gut!
   utter_thanks:
@@ -39,9 +37,9 @@ responses:
 actions:
 - action_get_next_game
 - action_get_table_leader
+- action_get_team_stats
 - utter_dumb_quote
 - utter_goodbye
 - utter_greet
 - utter_iamabot
-- utter_name
 - utter_thanks

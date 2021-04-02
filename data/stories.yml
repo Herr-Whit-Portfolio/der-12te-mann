@@ -5,7 +5,7 @@ stories:
 - story: greet
   steps:
   - intent: greet
-  - action: utter_name
+  - action: utter_greet
 
 - story: goodbye
   steps:
@@ -17,20 +17,13 @@ stories:
   - intent: thanks
   - action: utter_thanks
 
-- story: name
-  steps:
-    - intent: name
-      entities:
-        - name: "Sam"
-    - action: utter_greet
-
 - story: are_you_bot
   steps:
     - intent: greet
-    - action: utter_name
-    - intent: name
-      entities:
-        - name: "Sam"
+#    - action: utter_name
+#    - intent: name
+#      entities:
+#        - name: "Sam"
     - action: utter_greet
     - intent: bot_challenge
     - action: utter_iamabot
@@ -40,10 +33,10 @@ stories:
 - story: tell_me_quote
   steps:
     - intent: greet
-    - action: utter_name
-    - intent: name
-      entities:
-      - name: "Sam"
+#    - action: utter_name
+#    - intent: name
+#      entities:
+#      - name: "Sam"
     - action: utter_greet
     - intent: dumb_quote
     - action: utter_dumb_quote
@@ -53,10 +46,10 @@ stories:
 - story: give_me_info_1
   steps:
     - intent: greet
-    - action: utter_name
-    - intent: name
-      entities:
-      - name: "Sam"
+#    - action: utter_name
+#    - intent: name
+#      entities:
+#      - name: "Sam"
     - action: utter_greet
     - intent: get_table_leader
     - action: action_get_table_leader
@@ -69,12 +62,12 @@ stories:
 - story: interactive_story_1
   steps:
   - intent: greet
-  - action: utter_name
-  - intent: name
-    entities:
-    - name: Deb
-  - slot_was_set:
-    - name: Deb
+#  - action: utter_name
+#  - intent: name
+#    entities:
+#    - name: Deb
+#  - slot_was_set:
+#    - name: Deb
   - action: utter_greet
   - intent: dumb_quote
   - action: utter_dumb_quote
@@ -92,12 +85,12 @@ stories:
 - story: interactive_story_1
   steps:
   - intent: greet
-  - action: utter_name
-  - intent: name
-    entities:
-    - name: Anton
-  - slot_was_set:
-    - name: Anton
+#  - action: utter_name
+#  - intent: name
+#    entities:
+#    - name: Anton
+#  - slot_was_set:
+#    - name: Anton
   - action: utter_greet
   - intent: get_next_game
   - action: action_get_next_game
@@ -113,5 +106,77 @@ stories:
   - action: action_get_next_game
   - intent: get_next_game
   - action: action_get_next_game
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: dumb_quote
+  - action: utter_dumb_quote
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: dumb_quote
+  - action: utter_dumb_quote
+  - intent: get_table_leader
+  - action: action_get_table_leader
+  - intent: get_next_game
+  - action: action_get_next_game
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: get_team_stats
+    entities:
+    - team_name: köln
+  - slot_was_set:
+    - team_name: köln
+  - action: action_get_team_stats
+  - intent: get_team_stats
+    entities:
+    - team_name: Bayern
+  - slot_was_set:
+    - team_name: Bayern
+  - action: action_get_team_stats
+  - intent: dumb_quote
+  - action: utter_dumb_quote
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: get_team_stats
+    entities:
+    - team_name: leverkusen
+  - slot_was_set:
+    - team_name: leverkusen
+  - action: action_get_team_stats
+  - intent: get_team_stats
+    entities:
+    - team_name: werder
+  - slot_was_set:
+    - team_name: werder
+  - action: action_get_team_stats
+  - intent: get_team_stats
+    entities:
+    - team_name: Frankfurter
+  - slot_was_set:
+    - team_name: Frankfurter
+  - action: action_get_team_stats
+  - intent: get_team_stats
+  - action: action_get_team_stats
   - intent: goodbye
   - action: utter_goodbye

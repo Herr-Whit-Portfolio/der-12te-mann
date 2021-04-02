@@ -42,6 +42,8 @@ nlu:
     - huhu
     - huhu sag mal hallo
     - Hallo chatbot, wie gehts?
+    - Hallo!
+    - Guten morgen!
 - intent: goodbye
   examples: |
     - Schönen Abend noch
@@ -90,6 +92,10 @@ nlu:
     - Wir sehen uns das nächste mal
     - tschau, ich muss los
     - Tschautschau!
+    - Byebye!
+    - Danke, tschau!
+    - Danke, machs gut!
+    - Bye
 - intent: thanks
   examples: |
     - Danke
@@ -154,46 +160,6 @@ nlu:
     - ok bot
     - okay bot
     - genau!
-- intent: name
-  examples: |
-    - Mein name ist [Juste](name)  <!--- Square brackets contain the value of entity while the text in parentheses is a a label of the entity -->
-    - ich bin [Tim](name)
-    - ich bin [Robert](name)
-    - ich bin [Tom](name)
-    - ich bin [Sarah](name)
-    - ich bin [Lisa](name)
-    - ich bin [Fatima](name)
-    - ich bin [Ali](name)
-    - ich bin [Josh](name)
-    - Ich heisse [Lucy](name)
-    - Man nennt mich [Greg](name)
-    - sag [David](name)
-    - meine freunde nennen mich [Amy](name)
-    - du kannst mich [John](name) nennen
-    - du darft mich [Sam](name) nennen
-    - Please call me [Linda](name)
-    - mein name is [Tom](name)
-    - [Lucy](name)
-    - [Peter](name)
-    - [Mark](name)
-    - [Joseph](name)
-    - [Tan](name)
-    - [Pete](name)
-    - [Elon](name)
-    - [Penny](name)
-    - [Fatima](name)
-    - [Kai](name)
-    - [Ralf](name)
-    - [Oliver](name)
-    - [Philipp](name)
-    - [Karsten](name)
-    - [Lina](name)
-    - [Jenny](name)
-    - name is [Andrew](name)
-    - name is [Pari](name)
-    - name [Sanjay](name)
-    - Hi, ich heisse [Deb](name)
-    - Hi! Ich bin [Anton](name)
 - intent: dumb_quote
   examples: |
     - erzähle ein Zitat
@@ -247,6 +213,9 @@ nlu:
     - Hast du noch ein Zitat fuer mich
     - Kennst du ein Zitat von POdolski
     - das kenn ich schon, gib mir ein neues Zitat
+    - Gib mir ein zitat!
+    - Hau mal ein Fußbalzitat raus!
+    - Hast du ein gutes Fussballzitat?
 - intent: bot_challenge
   examples: |
     - Bist du ein Bot?
@@ -262,6 +231,7 @@ nlu:
     - Wie sieht die Tabelle aus?
     - Welche ist die beste Mannschaft?
     - Wer isr gerade Spitzenreiter
+    - Wer führt in der Bundesliga?
 - intent: get_next_game
   examples: |
     - Wer spielt am nächsten Spieltag?
@@ -275,3 +245,20 @@ nlu:
     - Was läuft nächsten Spieltag
     - Wer spielt als nächstes?
     - Welches ist das nächste spiel?
+    - Welche Spiele stehen an?
+    - Nächster Spieltag?
+- intent: get_team_stats
+  examples: |
+    - Wie stehts um die [Bayern](team_name)?
+    - Was macht [leverkusen](team_name)?
+    - Gib mir Info zu [Dortmund](team_name)!
+    - Zeig mir die Stats von [Werder Bremen](team_name)
+    - Auf welchem Platz ist [Bayer](team_name)?
+    - Wie gehts den [Hamburgern](team_name)?
+    - Auf welchem Rang sind die [Borussen](team_name)?
+    - Auf welchem rang ist [köln](team_name)?
+    - Was macht [Bayern](team_name)?
+    - Was geht mit [leverkusen](team_name)?
+    - Was geht mit [werder](team_name)?
+    - Erzähl mir was über die [Frankfurter](team_name).
+    - Was geht mit [Eintracht](team_name)?
