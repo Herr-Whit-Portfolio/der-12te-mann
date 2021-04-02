@@ -14,24 +14,54 @@ import datetime
 from typing import Any, Text, Dict, List
 from requests import get
 from datetime import date
-YEAR = str(date.today().year - 1)
-datetime_format = '%Y-%m-%dT%H:%M:%SZ'
+
 import json
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import re
+from abc import abstractmethod
 
-BASE_URL = 'http://www.openligadb.de/api'
 
-import rasa_sdk
 
 def tidy_string(string):
     string = re.sub('[\n\r ]+', ' ', string)
     return string.strip(' ')
 
 
-class ActionGetTableLeader(Action):
+class FootballBotAction(Action):
+    BASE_URL = 'http://www.openligadb.de/api'
+    YEAR = str(date.today().year - 1)
+    datetime_format = '%Y-%m-%dT%H:%M:%S'
+    apology = "Upps! Da ist was schiefgelaufen. Ich kann dir leider keine Antwort geben."
+    @property
+    def endpoint(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def name(self) -> Text:
+        return 'ABC_Football_Bot'
+
+    @abstractmethod
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        pass
+
+    @abstractmethod
+    def interact_with_api(self):
+        pass
+
+    @staticmethod
+    def send_request(request_url):
+        response = get(request_url)
+        assert response.ok and not response.is_redirect
+        result = json.loads(response.content.decode())
+        return result
+
+
+class ActionGetTableLeader(FootballBotAction):
+    endpoint = '/getbltable/bl1/'
 
     def name(self) -> Text:
         return "action_get_table_leader"
@@ -45,23 +75,17 @@ class ActionGetTableLeader(Action):
 
     def interact_with_api(self):
         apology = "Es tut mir Leid, ich konnte die Tabelle nicht finden."
-        request_url = BASE_URL + '/getbltable/bl1/' + YEAR
-        response = get(request_url)
-        if response.ok and not response.is_redirect:
-            result = json.loads(response.content.decode())
+
+        try:
+            result = self.send_request(self.BASE_URL + self.endpoint + self.YEAR)
             table_leader = result[0]
-
-            try:
-                utterance = f"""
-                                        {table_leader["TeamName"]} führt die Tabelle mit {table_leader["Points"]} Punkten an und hat einen Vorsprung von
-                                        {table_leader["Points"] - result[1]["Points"]} Punkten vor dem Tabellen-Zweiten {result[1]["TeamName"]}
-                                    """
-                return tidy_string(utterance)
-            except KeyError:
-                return apology
-        else:
+            utterance = f"""
+                                    {table_leader["TeamName"]} führt die Tabelle mit {table_leader["Points"]} Punkten an und hat einen Vorsprung von
+                                    {table_leader["Points"] - result[1]["Points"]} Punkten vor dem Tabellen-Zweiten {result[1]["TeamName"]}
+                                """
+            return tidy_string(utterance)
+        except KeyError or AssertionError:
             return apology
-
 
 """
 Die aktuelle Group (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu übergebenden leagueShortcuts (z.B. 'bl1'):
@@ -72,7 +96,9 @@ Der aktuelle Spieltag wird jeweils zur Hälfte der Zeit zwischen dem letzten Spi
 """
 
 
-class ActionGetNextGame(Action):
+class ActionGetNextGame(FootballBotAction):
+    endpoint = '/getmatchdata/bl1'
+    apology = "Es tut mir Leid, ich konnte kein Spiel finden."
 
     def name(self) -> Text:
         return "action_get_next_game"
@@ -80,30 +106,25 @@ class ActionGetNextGame(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        utterance = self.interface_with_api()
+        utterance = self.interact_with_api()
         dispatcher.utter_message(text=utterance)
         return []
 
-    def interface_with_api(self):
-        apology = "Es tut mir Leid, ich konnte kein Spiel finden."
-        request_url = BASE_URL + '/getmatchdata/bl1'
-        response = get(request_url)
-        if response.ok and not response.is_redirect:
-            results = json.loads(response.content.decode())
+    def interact_with_api(self):
+        try:
+            results = self.send_request(self.BASE_URL + self.endpoint)
+            day = datetime.datetime.strptime(results[0]['MatchDateTime'], self.datetime_format).date()
+            utterance = f"Die folgenden Spiele finden am {results[0]['Group']['GroupName']} ({day}) statt:\n"
+            for result in results:
+                time = datetime.datetime.strptime(result['MatchDateTime'], self.datetime_format).time()
+                utterance += tidy_string(f"""
+                                        {time}: {result['Team1']['TeamName']} gegen {result['Team2']['TeamName']}
+                                    """) + '\n'
+            return utterance
+        except KeyError or AssertionError:
+            return self.apology
 
-            try:
-                day = datetime.datetime.strptime(results[0]['MatchDateTimeUTC'], datetime_format).date()
-                utterance = f"Die folgenden Spiele finden am {results[0]['Group']['GroupName']} ({day}) statt:\n"
-                for result in results:
-                    time = datetime.datetime.strptime(result['MatchDateTimeUTC'], datetime_format).time()
-                    utterance += tidy_string(f"""
-                                            {time}: {result['Team1']['TeamName']} gegen {result['Team2']['TeamName']}
-                                        """) + '\n'
-                return utterance
-            except KeyError:
-                return apology
-        else:
-            return apology
+
 
 
 
