@@ -22,6 +22,7 @@ from rasa_sdk.executor import CollectingDispatcher
 import re
 from abc import abstractmethod
 
+import nltk
 
 
 def tidy_string(string):
@@ -34,6 +35,7 @@ class FootballBotAction(Action):
     YEAR = str(date.today().year - 1)
     datetime_format = '%Y-%m-%dT%H:%M:%S'
     apology = "Upps! Da ist was schiefgelaufen. Ich kann dir leider keine Antwort geben."
+
     @property
     def endpoint(self):
         raise NotImplementedError
@@ -49,7 +51,7 @@ class FootballBotAction(Action):
         pass
 
     @abstractmethod
-    def interact_with_api(self):
+    def interact_with_api(self, **domain):
         pass
 
     @staticmethod
@@ -62,6 +64,7 @@ class FootballBotAction(Action):
 
 class ActionGetTableLeader(FootballBotAction):
     endpoint = '/getbltable/bl1/'
+    apology = "Es tut mir Leid, ich konnte die Tabelle nicht finden."
 
     def name(self) -> Text:
         return "action_get_table_leader"
@@ -74,8 +77,6 @@ class ActionGetTableLeader(FootballBotAction):
         return []
 
     def interact_with_api(self):
-        apology = "Es tut mir Leid, ich konnte die Tabelle nicht finden."
-
         try:
             result = self.send_request(self.BASE_URL + self.endpoint + self.YEAR)
             table_leader = result[0]
@@ -85,7 +86,52 @@ class ActionGetTableLeader(FootballBotAction):
                                 """
             return tidy_string(utterance)
         except KeyError or AssertionError:
-            return apology
+            return self.apology
+
+
+class ActionGetTeamStats(FootballBotAction):
+    apology = "Es tut mir Leid, ich konnte die Statistiken nicht finden."
+    endpoint = '/getbltable/bl1/'
+
+    def name(self) -> Text:
+        return "action_get_team_stats"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        utterance = self.interact_with_api(tracker)
+        dispatcher.utter_message(text=utterance)
+        return []
+
+    def interact_with_api(self, tracker):
+        #try:
+        results = self.send_request(self.BASE_URL + self.endpoint + self.YEAR)
+        team_index = self.find_team_index(results, tracker.get_slot('team_name'))
+        team_stats = results[team_index]
+        team_stats['TeamRank'] = team_index
+        utterance = self.format_utterance(team_stats)
+        return tidy_string(utterance)
+        #except KeyError or AssertionError:
+          #  return self.apology
+
+    @staticmethod
+    def format_utterance(stats):
+        utterance = f"""
+            {stats['TeamName']} ist auf dem {stats['TeamRank']}. Platz mit  {stats['Points']} Punkten. 
+        """
+        return utterance
+
+    @staticmethod
+    def find_team_index(table, team_name):
+        table_names = [entry['TeamName'] for entry in table]
+        word_level_edit_distances = list()
+
+        for name in table_names:
+            word_level_edit_distances.append(min([nltk.edit_distance(word, team_name) for word in name.split(' ')]))
+
+        return word_level_edit_distances.index(min(word_level_edit_distances))
+
+
 
 """
 Die aktuelle Group (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu übergebenden leagueShortcuts (z.B. 'bl1'):
