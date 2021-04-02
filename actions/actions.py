@@ -14,15 +14,15 @@ import datetime
 from typing import Any, Text, Dict, List
 from requests import get
 from datetime import date
-#YEAR = str(date.today().year - 1)
-#datetime_format = '%Y-%m-%dT%H:%M:%SZ'
+YEAR = str(date.today().year - 1)
+datetime_format = '%Y-%m-%dT%H:%M:%SZ'
 import json
 
-from abc import ABCMeta, abstractmethod
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import re
-#BASE_URL = 'http://www.openligadb.de/api'
+
+BASE_URL = 'http://www.openligadb.de/api'
 
 import rasa_sdk
 
@@ -31,20 +31,7 @@ def tidy_string(string):
     return string.strip(' ')
 
 
-class FootballAction(Action):
-    __metaclass__ = ABCMeta
-    __flags__ = 1 << 20
-    def __init__(self):
-        self.YEAR = str(date.today().year - 1)
-        self.datetime_format = '%Y-%m-%dT%H:%M:%SZ'
-        self.BASE_URL = 'http://www.openligadb.de/api'
-
-    @abstractmethod
-    def interact_with_api(self):
-        NotImplementedError('Please specify API interaction')
-
-
-class ActionGetTableLeader(FootballAction):
+class ActionGetTableLeader(Action):
 
     def name(self) -> Text:
         return "action_get_table_leader"
@@ -58,7 +45,7 @@ class ActionGetTableLeader(FootballAction):
 
     def interact_with_api(self):
         apology = "Es tut mir Leid, ich konnte die Tabelle nicht finden."
-        request_url = self.BASE_URL + '/getbltable/bl1/' + self.YEAR
+        request_url = BASE_URL + '/getbltable/bl1/' + YEAR
         response = get(request_url)
         if response.ok and not response.is_redirect:
             result = json.loads(response.content.decode())
@@ -85,7 +72,7 @@ Der aktuelle Spieltag wird jeweils zur Hälfte der Zeit zwischen dem letzten Spi
 """
 
 
-class ActionGetNextGame(FootballAction):
+class ActionGetNextGame(Action):
 
     def name(self) -> Text:
         return "action_get_next_game"
@@ -99,16 +86,16 @@ class ActionGetNextGame(FootballAction):
 
     def interface_with_api(self):
         apology = "Es tut mir Leid, ich konnte kein Spiel finden."
-        request_url = self.BASE_URL + '/getmatchdata/bl1'
+        request_url = BASE_URL + '/getmatchdata/bl1'
         response = get(request_url)
         if response.ok and not response.is_redirect:
             results = json.loads(response.content.decode())
 
             try:
-                day = datetime.datetime.strptime(results[0]['MatchDateTimeUTC'], self.datetime_format).date()
+                day = datetime.datetime.strptime(results[0]['MatchDateTimeUTC'], datetime_format).date()
                 utterance = f"Die folgenden Spiele finden am {results[0]['Group']['GroupName']} ({day}) statt:\n"
                 for result in results:
-                    time = datetime.datetime.strptime(result['MatchDateTimeUTC'], self.datetime_format).time()
+                    time = datetime.datetime.strptime(result['MatchDateTimeUTC'], datetime_format).time()
                     utterance += tidy_string(f"""
                                             {time}: {result['Team1']['TeamName']} gegen {result['Team2']['TeamName']}
                                         """) + '\n'
