@@ -18,11 +18,13 @@ from datetime import date
 #datetime_format = '%Y-%m-%dT%H:%M:%SZ'
 import json
 
+from abc import ABCMeta, abstractmethod
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import re
 #BASE_URL = 'http://www.openligadb.de/api'
 
+import rasa_sdk
 
 def tidy_string(string):
     string = re.sub('[\n\r ]+', ' ', string)
@@ -30,11 +32,14 @@ def tidy_string(string):
 
 
 class FootballAction(Action):
+    __metaclass__ = ABCMeta
+    __flags__ = 1 << 20
     def __init__(self):
         self.YEAR = str(date.today().year - 1)
         self.datetime_format = '%Y-%m-%dT%H:%M:%SZ'
         self.BASE_URL = 'http://www.openligadb.de/api'
 
+    @abstractmethod
     def interact_with_api(self):
         NotImplementedError('Please specify API interaction')
 
@@ -47,7 +52,8 @@ class ActionGetTableLeader(FootballAction):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text=self.interact_with_api())
+        utterance = self.interact_with_api()
+        dispatcher.utter_message(text=utterance)
         return []
 
     def interact_with_api(self):
