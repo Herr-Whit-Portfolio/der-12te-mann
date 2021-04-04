@@ -17,11 +17,33 @@ Additionally the Bot should handle basic conversational elements like greetings,
 The Chatbot will be based on the [RASA](https://rasa.com/docs/) Framework.
 For the retrieval of football-related info, I intend to use [Openliga](https://www.openligadb.de/).
 
-Relevant software, which might become useful at a later stage:
-- spacy
-- NLTK
+### Project Structure
+The extension of the chatbots functions mainly depends on two components:
 
+Language training data and possible bot action/responses see files under `./data`
 
-## Acknlowledgements
-I would like to acknowledge Oliver Guhr and his [german RASA template](https://github.com/oliverguhr/german-rasa-bot), 
-which helped me to get going with a basis of German Training Data. 
+API calls, logic and formatting of statistics is handled through `./actions`
+
+## Evaluation and Possible Extensions
+The aim of the project was to develop a simple chatbot handling basic conversational functions, as well as informing 
+about ongoings in football. This aim was achieved, reflecting a Minimum Viable Product (MVP). To make the bot more 
+flexible and scalable in terms of functionality, the approach would need to be modified:
+
+The football-statistics would need to be stored in a structured format like SQL or a 
+[Graph-Based Database](https://towardsdatascience.com/what-is-a-graph-database-249cd7fdf24d).
+The clients queries can then be transformed into formal database queries and inserted into templated responses.
+![](img/flexible_query_example.PNG)
+
+For smaller additions it would be sufficient to add further custom actions. For example:
+- Return the specific of the next game of a given team
+- Provide the names of the scorers in a given game
+- Recount the game history of two teams and make a prediction for the next encounter based on that data 
+
+### Issues and Testing
+Bugs of this project are tracked in the [issues](https://github.com/Herr-Whit/der-12te-mann/issues) tab. The adequacy 
+and correctness of responses has not been systematically tested.
+
+## Acknowledgements
+I would like to acknowledge Oliver Guhr and his [German RASA template](https://github.com/oliverguhr/german-rasa-bot), 
+which helped me to get going with a basis of German Training Data, as well as [Openliga](https://www.openligadb.de/) for 
+providing the Statistics via API. 
