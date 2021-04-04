@@ -7,7 +7,7 @@ A German-Language chatbot informing you about the ins and outs of the German Foo
 The goal of this project (no pun intended) is to develop a informal chatbot, which will inform you about the 1st German Football Bundesliga activity and scores.
 This should include:
 - [x] Standings of Teams 
-- [ ] Scores of past Games 
+- [x] Scores of past Games 
 - [x] Upcoming Games
 
 Additionally the Bot should handle basic conversational elements like greetings, goodbyes etc.
