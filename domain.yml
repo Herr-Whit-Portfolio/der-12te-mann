@@ -3,15 +3,16 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
-- get_team_stats
 - goodbye
-- dumb_quote
-- greet
+- bot_challenge
 - get_table_leader
+- greet
+- get_previous_games
+- get_team_stats
+- dumb_quote
 - get_next_game
 - thanks
 - deny
-- bot_challenge
 entities:
 - team_name
 slots:
@@ -36,6 +37,7 @@ responses:
   - text: Ich gebs ja zu... Ich bin ein Bot!
 actions:
 - action_get_next_game
+- action_get_previous_games
 - action_get_table_leader
 - action_get_team_stats
 - utter_dumb_quote

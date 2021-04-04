@@ -44,6 +44,7 @@ nlu:
     - Hallo chatbot, wie gehts?
     - Hallo!
     - Guten morgen!
+    - Hi!
 - intent: goodbye
   examples: |
     - Schönen Abend noch
@@ -96,6 +97,7 @@ nlu:
     - Danke, tschau!
     - Danke, machs gut!
     - Bye
+    - Super! Vielen Dank für die Info. Bis bald!
 - intent: thanks
   examples: |
     - Danke
@@ -232,6 +234,7 @@ nlu:
     - Welche ist die beste Mannschaft?
     - Wer isr gerade Spitzenreiter
     - Wer führt in der Bundesliga?
+    - und wie stehen sie in der tabelle?
 - intent: get_next_game
   examples: |
     - Wer spielt am nächsten Spieltag?
@@ -262,3 +265,12 @@ nlu:
     - Was geht mit [werder](team_name)?
     - Erzähl mir was über die [Frankfurter](team_name).
     - Was geht mit [Eintracht](team_name)?
+- intent: get_previous_games
+  examples: |
+    - Wie hat [Freiburg](team_name) gespielt?
+    - Die Ergebnisse von [Stuttgart](team_name)
+    - Was sind die letzten Ergebnisse von [Schalke](team_name)?
+    - Zeig mir die letzten Spiele von [dortmunt](team_name).
+    - Wie sind [Mönchengladbachs](team_name) Spiele gelaufen?
+    - Was ist der Spielverlauf von [Leibzig](team_name) Spielen?
+    - Wie hat Werder [Bremen](team_name) in letzter Zeit gespielt?

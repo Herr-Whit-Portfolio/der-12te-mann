@@ -33,15 +33,23 @@ stories:
 - story: tell_me_quote
   steps:
     - intent: greet
-#    - action: utter_name
-#    - intent: name
-#      entities:
-#      - name: "Sam"
     - action: utter_greet
     - intent: dumb_quote
     - action: utter_dumb_quote
     - intent: goodbye
     - action: utter_goodbye
+
+- story: simple_get_past_names
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: dumb_quote
+    - action: utter_dumb_quote
+    - intent: get_previous_games
+    - action: action_get_previous_games
+    - intent: goodbye
+    - action: utter_goodbye
+
 
 - story: give_me_info_1
   steps:
@@ -82,7 +90,7 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: interactive_story_2
   steps:
   - intent: greet
 #  - action: utter_name
@@ -109,7 +117,7 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: interactive_story_3
   steps:
   - intent: greet
   - action: utter_greet
@@ -122,7 +130,7 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: interactive_story_4
   steps:
   - intent: greet
   - action: utter_greet
@@ -135,7 +143,7 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: interactive_story_5
   steps:
   - intent: greet
   - action: utter_greet
@@ -156,7 +164,7 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: interactive_story_6
   steps:
   - intent: get_team_stats
     entities:
@@ -178,5 +186,22 @@ stories:
   - action: action_get_team_stats
   - intent: get_team_stats
   - action: action_get_team_stats
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: get_previous_games
+    entities:
+    - team_name: Bremen
+  - slot_was_set:
+    - team_name: Bremen
+  - action: action_get_previous_games
+  - intent: get_table_leader
+  - action: action_get_team_stats
+  - intent: bot_challenge
+  - action: utter_iamabot
   - intent: goodbye
   - action: utter_goodbye
